@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="form.css">
+</head>
+
+<body>
+
+    <br><br>
+    <div class="container">
+        <form method="post" action="#" class="form-check">
+
+            <h4>Vrsta eventa</h4>
+            <div>
+                <div>
+                    <input type="radio" class="form-check-input" name="typeOfEvent" id="clubbingInput" required>
+                    <label for="clubbingInput" class="form-check-label">Clubbing</label>
+
+                    <div class="reveal-if-active">
+                        <label for="clubbingObjectInput">Vaš klub</label>
+                        <select name="clubbingObject" id="clubbingObjectInput" class="form-control"
+                            data-require-pair="#clubbingInput">
+                            <option>Gaudeamus</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <input type="radio" class="form-check-input" name="typeOfEvent" id="barLoungeInput">
+                    <label for="barLoungeInput" class="form-check-label">Bar/lounge</label>
+
+                    <div class="reveal-if-active">
+                        <label for="barLoungeObjectInput">Vaš bar/lounge</label>
+                        <select name="barLoungeObject" id="barLoungeObjectInput" class="form-control"
+                            data-require-pair="#barLoungeInput">
+                            <option>Viva Caffe Bar Lounge</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <input type="radio" class="form-check-input" name="typeOfEvent" id="concertInput" required>
+                    <label for="concertInput" class="form-check-label">Koncert</label>
+
+                    <div class="reveal-if-active">
+                        <label for="concertCoordinatesInput">Koordinate koncerta</label>
+                        <br>
+                        <input type="text" name="concertCoordinates" id="concertCoordinatesInput"
+                            class="btn-block form-control" data-require-pair="#concertInput">
+                        <p class="small"><a
+                                href="https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en"
+                                target="_blank">Kako naći koordinate koncerta?</a></p>
+
+                        <div class="form-row">
+                            <div class="col-6">
+                                <label for="concertCityInput">Grad</label>
+                                <select name="concertCity" id="concertCityInput" class="form-control"
+                                    data-require-pair="#concertInput">
+                                    <option>Posušje</option>
+                                    <option>Široki Brijeg</option>
+                                    <option>Mostar</option>
+                                    <option>Čapljina</option>
+                                    <option>Grude</option>
+                                    <option>Tomislavgrad</option>
+                                    <option>Međugorje</option>
+                                    <option>Ljubuški</option>
+                                    <option>Čitluk</option>
+                                    <option>Jablanica</option>
+                                    <option>Neum</option>
+                                </select>
+                            </div>
+
+                            <div class="col-6">
+                                <label for="concertAddressInput">Ulica i broj</label>
+                                <input type="text" name="concertAddress" id="concertAddressInput"
+                                    class="btn-block form-control" data-require-pair="#concertInput">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <input type="radio" class="form-check-input" name="typeOfEvent" id="festivalInput" required>
+                    <label for="festivalInput" class="form-check-label">Festival</label>
+
+                    <div class="reveal-if-active">
+                        <label for="festivalCoordinatesInput">Koordinate festivala</label>
+                        <br>
+                        <input type="text" name="concertCoordinates" id="festivalCoordinatesInput"
+                            class="btn-block form-control" data-require-pair="#festivalInput">
+                        <p class="small"><a
+                                href="https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en"
+                                target="_blank">Kako naći koordinate festivala?</a></p>
+
+                        <div class="form-row">
+                            <div class="col-6">
+                                <label for="festivalCityInput">Grad</label>
+                                <select name="festivalCity" id="festivalCityInput" class="form-control"
+                                    data-require-pair="#festivalInput">
+                                    <option>Posušje</option>
+                                    <option>Široki Brijeg</option>
+                                    <option>Mostar</option>
+                                    <option>Čapljina</option>
+                                    <option>Grude</option>
+                                    <option>Tomislavgrad</option>
+                                    <option>Međugorje</option>
+                                    <option>Ljubuški</option>
+                                    <option>Čitluk</option>
+                                    <option>Jablanica</option>
+                                    <option>Neum</option>
+                                </select>
+                            </div>
+
+                            <div class="col-6">
+                                <label for="festivalAddressInput">Ulica i broj</label>
+                                <input type="text" name="festivalAddress" id="festivalAddressInput"
+                                    class="btn-block form-control" data-require-pair="#festivalInput">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div>
+                <input type="submit" value="Submit">
+            </div>
+
+            <button type="button" onclick="testFunc()">value</button>
+
+        </form>
+    </div>
+</body>
+
+<script>
+    var FormStuff = {
+
+        init: function () {
+            this.applyConditionalRequired();
+            this.bindUIActions();
+        },
+
+        bindUIActions: function () {
+            $("input[type='radio'], input[type='checkbox']").on("change", this.applyConditionalRequired);
+        },
+
+        applyConditionalRequired: function () {
+
+            $(".require-if-active").each(function () {
+                var el = $(this);
+                if ($(el.data("require-pair")).is(":checked")) {
+                    el.prop("required", true);
+                } else {
+                    el.prop("required", false);
+                }
+            });
+
+        }
+
+    };
+
+    FormStuff.init();
+
+    let testFunc = () => {
+        let e = document.getElementById("clubbingObjectInput");
+        let optionValue = e.options[e.selectedIndex].text;
+        if (document.getElementsByName("typeOfEvent")[0].checked) {
+            // console.log("odabran klub")
+            let e = document.getElementById("clubbingObjectInput");
+            let optionValue = e.options[e.selectedIndex].text;
+            console.log(optionValue)
+        } else if (document.getElementsByName("typeOfEvent")[1].checked) {
+            let e = document.getElementById("barLoungeObjectInput");
+            let optionValue = e.options[e.selectedIndex].text;
+            console.log(optionValue);
+            // console.log("odabran bar lounge")
+        } else if (document.getElementsByName("typeOfEvent")[2].checked) {
+            let coords = document.getElementById("concertCoordinatesInput").value;
+            let e = document.getElementById("concertCityInput");
+            let city = e.options[e.selectedIndex].text;
+            let address = document.getElementById("concertAddressInput").value;
+            console.log(`kordinati koncerta = ${coords}\ngrad = ${city}\nadresa = ${address}`);
+
+            //console.log("odabran koncert")
+        } else if (document.getElementsByName("typeOfEvent")[3].checked) {
+            let coords = document.getElementById("festivalCoordinatesInput").value;
+            let e = document.getElementById("festivalCityInput");
+            let city = e.options[e.selectedIndex].text;
+            let address = document.getElementById("festivalAddressInput").value;
+            console.log(`kordinati festivala = ${coords}\ngrad = ${city}\nadresa = ${address}`);
+
+            //console.log("odabran festival")
+        } else {
+            console.log("greska")
+        }
+    };
+</script>
+
+</html>

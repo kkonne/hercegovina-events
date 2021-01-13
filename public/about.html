@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hercegovina events</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        #about .logo-main {
+            padding: 20px 0 10px 0;
+        }
+
+        .vertical {
+            margin: auto 0;
+        }
+
+        .tools-icons {
+            padding: 20px 0;
+            background-color: lightgray;
+            width: 100%;
+        }
+
+        .tools-displayed img {
+            height: 80px;
+            padding: 5px 20px;
+            opacity: 0.5;
+        }
+
+        .developers {
+            padding-bottom: 120px;
+        }
+
+        .developers img {
+            height: 300px;
+            width: 240px;
+        }
+
+        .socials {
+            word-wrap: break-word;
+        }
+
+        .socials img {
+            height: 50px;
+
+        }
+
+        .vision {
+            position: relative;
+            width: 50%;
+            padding: 40px 20px;
+            color: #f4f4f4;
+            margin: -120px auto;
+        }
+
+        .motiv {
+            background-image: url(./assets/images/background-illustration.svg);
+            background-size: cover;
+            padding: 150px 0 100px 0;
+            margin-bottom: 0;
+            border-top: 1px solid black;
+        }
+
+        .copyright {
+            margin: 0;
+            padding: 15px 0 5px 0;
+            color: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <div id="nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <img src="./assets/images/hercegovina-events-logo-light.svg" alt="Hercegovina Events Logo" height="30px"
+                style="margin-right: 10px;">
+            <a class="navbar-brand" href="./index.html">hercegovina events</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">danas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">vikend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">kontakt</a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+
+    <!-- ABOUT -->
+    <div id="about">
+        <div class="container text-center">
+            <img src="./assets/images/hercegovina-events-logo.svg" alt="Hercegovina Events Logo" width="150px"
+                class="logo-main">
+            <h1 class="font-weight-bold">Hercegovina events</h1>
+            <br>
+            <hr>
+            <h2 class="font-weight-bold">O nama</h2>
+            <p>Hercegovina events je platforma pomoću koje lako pronalazite informacije o različitim događajima u
+                Hercegovini<br>Intuitivan dizajn i jednostavnost korištenja stranice vam omogućava da događaje
+                filtrirate po lokaciji, vremenu ili kategoriji te da brzo i efikasno pronađete mjesto za izlazak 🥂</p>
+
+            <br>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Značajke</h5>
+                    <p>Moguće je filtrirati događaje po gradu u kojem se nalazite, po danu odnosno postoji traženje
+                        događaja za danas,
+                        sutra ili pak za nadolazeći vikend te je moguće pretraživanje događaja određene kategorije,
+                        primjerice koncerti ili clubbing događaji</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h5>Pristupačnost</h5>
+                    <p>Događaji su dostupni svim korisnicima koji posjete našu stranicu, s obzirom da registrirani
+                        korisnici imaju dodatne pogodnosti interakcije s događajima i spremanja određenih događaja na
+                        profil</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h5>Dizajn</h5>
+                    <p>Na stranici želimo postići moderno i jednostavno korisničko sučelje koje je lako za
+                        koristiti<br>Planiramo da izgled i sam dizajn stranice bude
+                        intuitivan i da prati najnovije trendove dizajniranja stranice, a predivan izgled i fluidno
+                        iskustvo korištenja su glavni preduvjeti za to</p>
+                </div>
+            </div>
+
+            <br><br>
+
+            <h2 class="font-weight-bold">Tehnologije</h2>
+
+            <br>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="./assets/images/frontend-sketch.svg" alt="Frontend design">
+                </div>
+
+                <div class="col-md-6 text-left vertical">
+                    <h3><code>&lt;Frontend/&gt;</code></h3>
+                    <p class="lead">Za izgled stranice koristimo temeljne industry-standard jezike kao što su HTML, CSS
+                        i JavaScript, no koristimo i najnovije frontend tehnologije kao što su Bootstrap, VueJS i
+                        razni libraryji za specijalizirane radnje kao što su animacije i određeno ponašanje browsera</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 text-right vertical">
+                    <h3><code>&lt;Backend/&gt;</code></h3>
+                    <p class="lead">Programski jezik koji koristimo za backend je JavaScript.<br>Funkcionalnost i
+                        stabilan rad stranice osiguran je Googleovim Firebase backend
+                        servisom koji sadržava našu autentifikaciju odnosno provjeru valjanosti podataka, real-time bazu
+                        podataka, pohranu slika i hosting. Također koristimo i dodatne frameworke JavaScripta kao što su
+                        NodeJS, a za kontrolu verzije sustava i suradnju developera koristimo GitHub</p>
+                </div>
+
+                <div class="col-md-6">
+                    <img src="./assets/images/backend-sketch.svg" alt="Frontend design">
+                </div>
+
+
+            </div>
+        </div>
+
+        <br>
+
+        <div class="tools-icons">
+            <div class="container-fluid text-center">
+                <div class="tools-displayed d-inline p-2">
+                    <img src="./assets/images/html.png" alt="HTML">
+                    <img src="./assets/images/css.png" alt="CSS">
+                    <img src="./assets/images/javascript.png" alt="JavaScript">
+                    <img src="./assets/images/vuejs.png" alt="VueJS">
+                    <img src="./assets/images/nodejs.png" alt="NodeJS">
+                    <img src="./assets/images/firebase.png" alt="Firebase">
+                    <img src="./assets/images/bootstrap.png" alt="Bootstrap">
+                    <img src="./assets/images/github.png" alt="GitHub">
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="developers">
+            <div class="container text-center">
+                <h2 class="font-weight-bold">Developeri</h2>
+                <p>I za kraj, oni zaslužni za ovo sve, oni koji su razvili ovaj sustav od samog početka</p>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="lead">Josip Leko</p>
+                        <img src="./assets/images/josip-leko.jpg" alt="Josip Leko" class="img-thumbnail">
+                        <p>Student, 21 godina<br>najviše se bavi razvijanjem web i mobilnih aplikacija, najviše koristi
+                            JavaScript i Dart</p>
+                        <cite>2013.-2017. - Gimnazija fra Grge Martića Posušje</cite><br>
+                        <cite>2018. - Informatika, FPMOZ</cite>
+
+                        <br><br>
+
+                        <!-- contact -->
+                        <p><a href="mailto:josipleko333@gmail.com">josipleko333@gmail.com</a></p>
+
+                        <div class="row socials">
+                            <div class="col-md-4">
+                                <img src="./assets/images/linkedin.svg" alt="LinkedIn">
+                                <p>/josip-leko-00284219a</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./assets/images/facebook.svg" alt="Facebook">
+                                <p>/josip.leko.39</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./assets/images/instagram.svg" alt="Instagram">
+                                <p>@josip.leko</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="lead">Mario Duspara</p>
+                        <img src="./assets/images/mario-duspara.jpeg" alt="Mario Duspara" class="img-thumbnail">
+                        <p>Student, 21 godina<br>pretežno razvija web aplikacije za to koristi Javascript,Firebase</p>
+                        <cite>2013.-2017. - Računalni tehničar, Srednja strukovna škola Posušje</cite><br>
+                        <cite>2018. - Informatika, FPMOZ</cite>
+
+                        <br><br>
+
+                        <!-- contact -->
+                        <p><a href="mailto:duspara777@hotmail.com">duspara777@hotmail.com</a></p>
+
+                        <div class="row socials">
+                            <div class="col-md-4">
+                                <img src="./assets/images/linkedin.svg" alt="LinkedIn">
+                                <p>/mario-duspara-4500a41a1</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./assets/images/facebook.svg" alt="Facebook">
+                                <p>/Dule117</p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="./assets/images/instagram.svg" alt="Instagram">
+                                <p>@dule777</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="vision bg-secondary">
+            <div class="container text-center">
+                <h2 class="font-weight-bold">Vizija</h2>
+                <p>Viziju možete pregledati i preuzeti na sljedećem linku</p>
+                <a href="https://drive.google.com/file/d/1ooHy8OGGTOJgRKcHYW7z8MCgvLZ05PGZ/view?usp=sharing"
+                    target="_blank">Link za
+                    viziju</a>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="motiv container-fluid">
+            <div class="container text-center">
+                <h2 class="font-weight-bold">Motiv</h2>
+                <p>Pojedinačnim traženjem po društvenim mrežama koji DJ nastupa u kojem klubu, došli smo do ideje da bi
+                    bilo super imati neku web-stranicu na
+                    kojoj imamo sve događaje na našem području da bi lako mogli naći mjesto za izlazak, no sličan sustav
+                    nismo našli.<br>Nadalje povodom <a href="https://kkonne.github.io/covid-19/" target="_blank">korona
+                        virusa</a>, znali smo da će se organizirati razni događaji čim to
+                    bude moguće tako da će potražnja za ovakvim sustavom biti ogromna</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright container-fluid text-center bg-dark">
+        <p class="small">© Hercegovina events 2020, Sva prava pridržana</p>
+    </div>
+
+</body>
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+
+         <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+
+         <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+         
+         <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+         
+         <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
+         
+         <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-functions.js"></script>
+         
+<script src="./firebaseConnect.js"></script>
+<script src="./auth.js"></script>
+
+</html>

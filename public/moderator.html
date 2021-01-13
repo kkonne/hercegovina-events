@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hercegovina events</title>
+
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+    <!-- FONT -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <!-- LIBRARIES -->
+
+    <link rel="stylesheet" href="./form.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        body {
+            background-color: #121212;
+            color: #cccccc;
+            display: none;
+        }
+
+        body li {
+            color: #121212
+        }
+
+        body code {
+            color: #cccccc;
+        }
+
+        .heading {
+            margin: 10px 0;
+        }
+
+        .dodaj-event,
+        .dodaj-objekt,
+        .profil {
+            padding: 20px;
+        }
+
+        .default {
+            margin: 15vh 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <div id="nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <img src="./assets/images/hercegovina-events-logo-light.svg" alt="Hercegovina Events Logo" height="30px"
+                style="margin-right: 10px;">
+            <a class="navbar-brand" href="./index.html">hercegovina events</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">danas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">vikend</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">kontakt</a>
+                    </li>
+                </ul>
+
+                <form class="form-inline my-2 my-lg-0">
+                    <ul class="navbar-nav mr-auto">
+
+                        <li class="nav-item">
+                            <a href="./login.html" class="nav-link" onclick="logout()">odjavi se</a>
+                        </li>
+                    </ul>
+                </form>
+
+            </div>
+        </nav>
+    </div>
+
+    <!-- ADMIN CONSOLE -->
+    <div id="moderator">
+        <div class="container">
+            <div class="heading text-center">
+                <code class="lead">
+                    <p class="typewrite" data-period="2000"
+                        data-type='[ "Moderator konzola.", "Pregledaj profil.", "Dodaj event.", "Dodaj objekt." ]'>
+                        <span class="wrap"></span>
+                    </p>
+                </code>
+
+                <script src="typewriter.js"></script>
+            </div>
+
+            <div class="default text-center">
+                <img height="200" width="200"
+                    alt="Profile picture" class="img-thumbnail" id="moderatorPhoto"> 
+                <br><br>
+                <h3>Dobrodošli</h3>
+                <h1 id="moderatorName"></h1>
+
+            </div>
+
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#profile"onclick="eventHistory()">Profil</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#events" onclick="optionList()">Eventovi</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#objects">Objekti</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="profile" class="tab-pane fade">
+                    <div class="profil">
+                        <h1>Profil</h1>
+
+
+                        <div class="event-history" id="historyList">
+                            <ul class="list-group">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="events" class="tab-pane fade">
+
+                    <div class="dodaj-event" id="dodajEvent">
+                        <h1>Eventovi</h1>
+
+                        <br>
+
+                        <h3>Dodaj event</h3>
+
+                        <br>
+
+                        <label for="eventNameInput">Naziv eventa</label>
+                        <br>
+                        <input type="text" name="eventName" id="eventNameInput" class="btn-block form-control">
+                        <br>
+                        <div class="eventDescriptionTextArea">
+                            <label for="eventDescriptionInput">Opis eventa</label>
+                            <textarea class="form-control" id="eventDescriptionInput" rows="3"></textarea>
+                        </div>
+                        <br>
+
+                        <div class="form-row">
+
+
+                            <div class="col-6">
+                                <label for="eventDateInput">Datum eventa</label>
+                                <input type="date" id="eventDateInput" name="eventDate" class="form-control">
+                            </div>
+
+                            <div class="col-6">
+                                <label for="eventTimeInput">Vrijeme eventa</label>
+                                <input type="time" id="eventTimeInput" name="eventTime" class="form-control">
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <form method="post" action="#" class="form-check">
+
+                            <h4>Vrsta eventa</h4>
+                            <div>
+                                <div>
+                                    <input type="radio" class="form-check-input" name="typeOfEvent" id="clubbingInput"
+                                        required  onclick="optionList()">
+                                    <label for="clubbingInput" class="form-check-label">Clubbing</label>
+
+                                    <div class="reveal-if-active">
+                                        <label for="clubbingObjectInput">Vaš klub</label>
+                                        <select name="clubbingObject" id="clubbingObjectInput" class="form-control"
+                                            data-require-pair="#clubbingInput">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <input type="radio" class="form-check-input" name="typeOfEvent" id="barLoungeInput" required onclick="optionList()">
+                                    <label for="barLoungeInput" class="form-check-label">Bar/lounge</label>
+
+                                    <div class="reveal-if-active">
+                                        <label for="barLoungeObjectInput">Vaš bar/lounge</label>
+                                        <select name="barLoungeObject" id="barLoungeObjectInput" class="form-control"
+                                            data-require-pair="#barLoungeInput">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <input type="radio" class="form-check-input" name="typeOfEvent" id="concertInput"
+                                        required  onclick="optionList()">
+                                    <label for="concertInput" class="form-check-label">Koncert</label>
+
+                                    <div class="reveal-if-active">
+                                        <label for="concertCoordinatesInput">Koordinate koncerta</label>
+                                        <br>
+                                        <input type="text" name="concertCoordinates" id="concertCoordinatesInput"
+                                            class="btn-block form-control" data-require-pair="#concertInput">
+                                        <p class="small"><a
+                                                href="https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en"
+                                                target="_blank">Kako naći koordinate koncerta?</a></p>
+
+                                        <div class="form-row">
+                                            <div class="col-6">
+                                                <label for="concertCityInput">Grad</label>
+                                                <select name="concertCity" id="concertCityInput" class="form-control"
+                                                    data-require-pair="#concertInput">
+                                                    <option>Odaberi grad</option>
+                                                    <option>Posušje</option>
+                                                    <option>Široki Brijeg</option>
+                                                    <option>Mostar</option>
+                                                    <option>Čapljina</option>
+                                                    <option>Grude</option>
+                                                    <option>Tomislavgrad</option>
+                                                    <option>Međugorje</option>
+                                                    <option>Ljubuški</option>
+                                                    <option>Čitluk</option>
+                                                    <option>Jablanica</option>
+                                                    <option>Neum</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="concertAddressInput">Ulica i broj</label>
+                                                <input type="text" name="concertAddress" id="concertAddressInput"
+                                                    class="btn-block form-control" data-require-pair="#concertInput">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="radio" class="form-check-input" name="typeOfEvent" id="festivalInput"
+                                        required  onclick="optionList()">
+                                    <label for="festivalInput" class="form-check-label">Festival</label>
+
+                                    <div class="reveal-if-active">
+                                        <label for="festivalCoordinatesInput">Koordinate festivala</label>
+                                        <br>
+                                        <input type="text" name="concertCoordinates" id="festivalCoordinatesInput"
+                                            class="btn-block form-control" data-require-pair="#festivalInput">
+                                        <p class="small"><a
+                                                href="https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en"
+                                                target="_blank">Kako naći koordinate festivala?</a></p>
+
+                                        <div class="form-row">
+                                            <div class="col-6">
+                                                <label for="festivalCityInput">Grad</label>
+                                                <select name="festivalCity" id="festivalCityInput" class="form-control"
+                                                    data-require-pair="#festivalInput">
+                                                    <option>Odaberi grad</option>
+                                                    <option>Posušje</option>
+                                                    <option>Široki Brijeg</option>
+                                                    <option>Mostar</option>
+                                                    <option>Čapljina</option>
+                                                    <option>Grude</option>
+                                                    <option>Tomislavgrad</option>
+                                                    <option>Međugorje</option>
+                                                    <option>Ljubuški</option>
+                                                    <option>Čitluk</option>
+                                                    <option>Jablanica</option>
+                                                    <option>Neum</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="festivalAddressInput">Ulica i broj</label>
+                                                <input type="text" name="festivalAddress" id="festivalAddressInput"
+                                                    class="btn-block form-control" data-require-pair="#festivalInput">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <br>
+
+                        <button type="button" class="btn btn-block btn-primary" onclick="addEvent()">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path fill-rule="evenodd"
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
+                            Dodaj event</button>
+                    </div>
+                </div>
+                <div id="objects" class="tab-pane fade">
+
+                    <div class="dodaj-objekt">
+                        <h1>Objekti</h1>
+
+                        <br>
+
+                        <h3>Dodaj objekt</h3>
+
+                        <br>
+
+                        <label for="objectNameInput">Naziv objekta</label>
+                        <br>
+                        <input type="text" name="objectName" id="objectNameInput" class="btn-block form-control">
+                        <br>
+
+                        <label for="objectCoordinatesInput">Koordinate objekta</label>
+                        <br>
+                        <input type="text" name="objectCoordinates" id="objectCoordinatesInput"
+                            class="btn-block form-control">
+                        <p class="small"><a
+                                href="https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en"
+                                target="_blank">Kako naći koordinate objekta?</a></p>
+
+                        <!-- https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en -->
+
+
+                        <div class="form-row">
+                            <div class="col-4">
+                                <label for="objectType">Vrsta objekta</label>
+                                <select name="objectType" class="form-control" id="objectTypeInput">
+                                    <option>Club</option>
+                                    <option>Bar/lounge</option>
+                                </select>
+                            </div>
+
+                            <div class="col-4">
+                                <label for="objectCity">Grad</label>
+                                <select name="objectCity" class="form-control" id="objectCityInput">
+                                    <option>Odaberi grad</option>
+                                    <option>Posušje</option>
+                                    <option>Široki Brijeg</option>
+                                    <option>Mostar</option>
+                                    <option>Čapljina</option>
+                                    <option>Grude</option>
+                                    <option>Tomislavgrad</option>
+                                    <option>Međugorje</option>
+                                    <option>Ljubuški</option>
+                                    <option>Čitluk</option>
+                                    <option>Jablanica</option>
+                                    <option>Neum</option>
+                                </select>
+                            </div>
+
+                            <div class="col-4">
+                                <label for="objectAddressInput">Ulica i broj</label>
+                                <input type="text" name="objectAddress" id="objectAddressInput"
+                                    class="btn-block form-control">
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <button type="button" class="btn btn-block btn-primary" id="buttonAddObject" onclick="addObject()">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path fill-rule="evenodd"
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
+                            Dodaj objekt</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <br>
+
+
+
+            <br>
+
+
+        </div>
+    </div>
+
+    <br>
+
+
+    <!-- FOOTER -->
+    <div id="copyright" class="container-fluid text-center bg-dark"
+        style="margin: 0;padding: 15px 0 5px 0;color: #f4f4f4;">
+        <p class="small">© Hercegovina events 2020, Sva prava pridržana</p>
+    </div>
+
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script src="./firebaseConnect.js"></script>
+<script src="./auth.js"></script>
+
+<!-- date picker -->
+<script>
+    $('.input-group.date').datepicker({ format: "dd.mm.yyyy" });
+</script>
+
+<!-- modular form -->
+<script src="./moderator.js"></script>
+
+</html>
