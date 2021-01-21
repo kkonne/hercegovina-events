@@ -91,9 +91,7 @@
                 <form class="form-inline my-2 my-lg-0">
                     <ul class="navbar-nav mr-auto">
 
-                        <li class="nav-item">
-                            <a href="./login.html" class="nav-link" onclick="logout()">odjavi se</a>
-                        </li>
+                        
                     </ul>
                 </form>
 
@@ -157,12 +155,26 @@
                         <br>
                         <input type="text" name="eventName" id="eventNameInput" class="btn-block form-control">
                         <br>
+                        
+                        <label for="eventImageInput">Fotografija eventa</label>
+                        <div class="alert alert-danger" role="alert" style="display: none;" id="eventImageError"></div>
+                        <input type="file" name="eventImage" id="eventImageInput" class="form-control-file"
+                            onchange="document.getElementById('eventImageInputPreview').src = window.URL.createObjectURL(this.files[0]);document.getElementById('addEventImageButton').style.display = 'block';document.getElementById('eventImageInputPreview').style.display='block';document.getElementById('eventImageInput').style.display='none';">
+
+                        <img id="eventImageInputPreview" alt="Event Image Preview" width="100%" height="100%"
+                            class="mt-2 img-fluid rounded" style="display: none">
+
+                        <p class="small text-muted">za najbolje rezultate omjer slike treba biti 16:9</p>
+                        <button class="btn btn-primary my-1" id="addEventImageButton" style="display:none"
+                            onclick="editImage()">Izmijeni sliku</button>
+
+                      
                         <div class="eventDescriptionTextArea">
                             <label for="eventDescriptionInput">Opis eventa</label>
                             <textarea class="form-control" id="eventDescriptionInput" rows="3"></textarea>
                         </div>
                         <br>
-
+                        
                         <div class="form-row">
 
 

@@ -117,6 +117,7 @@ function postovi(){ // samo logovi od eventova za postove
       <td>${posts[post].description}</td>
       <td>${posts[post].eventDate}</td>
       <td>${posts[post].eventTime}</td>
+      <td>${posts[post].eventImgUrl} </td>
       <tr>`
     }else{
       document.getElementById("allEvents").innerHTML +=
@@ -125,7 +126,8 @@ function postovi(){ // samo logovi od eventova za postove
       <td>${posts[post].description}</td>
       <td>${posts[post].eventDate} </td>
       <td>${posts[post].eventTime}</td>
-      <td>${posts[post].objectName}</td> 
+      <td>${posts[post].objectName}</td>
+      <td><img src="${posts[post].eventImgUrl}"></img></td>
       <tr>`
     }
     }
