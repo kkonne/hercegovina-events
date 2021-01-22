@@ -26,10 +26,10 @@ function addObject(){
     document.getElementById('objectNameInput').value = "";
     objectCoordinatesInput = document.getElementById('objectCoordinatesInput').value = "";
     objectTypeInput = document.getElementById('objectTypeInput').value = "";
-    objectCityInput = document.getElementById('objectCityInput').value = "";
+    objectCityInput = document.getElementById('objectCityInput').value = "Odaberi grad";
     objectAddressInput = document.getElementById('objectAddressInput').value = "";
     }
-    
+     var user = firebase.auth().currentUser;
     var objectName =  document.getElementById('objectNameInput').value;
     var objectCoordinatesInput = document.getElementById('objectCoordinatesInput').value;
     var objectTypeInput = document.getElementById('objectTypeInput').value;
@@ -381,27 +381,44 @@ function optionList(){
 }
 
 function eventHistory(){ 
+
+    let deleteEvent = (some) => {
+        
+        eventsImgRef = firebase.storage().ref("eventImages").child(some);
+        console.log(eventsImgRef)
+
+        eventsImgRef.delete().then(function(){
+            eventsRef = firebase.database().ref('events/'+some);
+            eventsRef.remove();
+            alert("Uspješno izbrisan event "+some);
+        }).catch(function(error){
+            console.log(error)
+        })
+    }
+    
     var query = firebase.database().ref("events");
     query.on("value",(data)=>{
       var posts = data.val();
       var user = firebase.auth().currentUser;
       document.getElementById("historyList").innerHTML = '<br><h3>Povijest vaših eventova</h3><br>'
+      
       for(const post in posts){
-          
+
+ 
           if(posts[post].userIdOfEvent == user.uid){
               
            if(posts[post].objectName == undefined){
         document.getElementById("historyList").innerHTML +=
         `
-        <li class="list-group-item">${posts[post].eventName}<span style="float: right;">${posts[post].eventDate}</span></li>
+        <li class="list-group-item">${posts[post].eventName}<span style="float: right;"></span></li>
 
         `
       }else{
         document.getElementById("historyList").innerHTML +=
         `
 
-        <li class="list-group-item">${posts[post].eventName}<span style="float: right;">${posts[post].eventDate}</span></li>
-
+        <li class="list-group-item">${posts[post].eventName}<span style="float: right;"></span></li>
+   
         `
       }
     }
@@ -409,6 +426,8 @@ function eventHistory(){
   
     })
   }
+  
+
 
   let editImage = () => {
     let error = document.getElementById("eventImageError");
@@ -450,4 +469,5 @@ function clearFields(){
     editImage();
 
 }
+
 
