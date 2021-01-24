@@ -114,7 +114,7 @@ function postovi(){ // samo logovi od eventova za postove
     var yyyy = today.getFullYear();
 
     today = yyyy +  mm  + dd;
-    console.log(today)
+
     todayDate = parseInt(today);
 
    

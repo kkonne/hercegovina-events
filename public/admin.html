@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,51 +23,331 @@
             box-sizing: border-box;
         }
 
-        #body {
-            background-color: #f4f4f4;
-            display: none;
+        body {
+            min-height: 100vh;
         }
 
-      #outputDiv{
-          display: none;
-      }
-      #outputDivUser{
-          display: none;
-      }
-      #outputDivModerator{
-          display: none;
-      }
+        #nav-pills a {
+            color: #eb6363;
+        }
 
+        #nav-pills a.active {
+            color: #f7f7f7;
+            background-color: #eb6363;
+        }
+
+        .accentColor {
+            color: #eb6363;
+        }
     </style>
 
 </head>
 
-<body id="body">
-   <ul>
-    <li class="nav-item">
-        <a class="nav-link" href="./index.html">Povratak na stranicu</a>
-    </li>
-   </ul>
-   <br><br>
-   <h1 id="adminConsoleMessage"></h1>
-   <br>
-   <p>Dodaj moderatora ili ukloni moderatora</p>
-   <input type="text" id="addModeratorEmail">
-   <br>
-   <button id="addModerator">Dodaj</button>
-   <button id="deleteModerator">Ukloni</button>
-   <br>
-   <br>
-   <button id="showTable">Prikaži sve</button>
-   <button id="showUsers">Prikaži samo korisnike</button>
-   <button id="showModerators">Prikaži samo moderatore</button>
-   <br>
-   <br>
-   <br>
-   <div id="outputDiv"></div>
-   <div id="outputDivUser"></div>
-   <div id="outputDivModerator"></div>
-   
+<body class="bg-dark">
+    <!-- NAVBAR -->
+    <div id="nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <img src="./assets/images/hercegovina-events-logo-light.svg" alt="Hercegovina Events Logo" height="30px"
+                style="margin-right: 10px;">
+            <a class="navbar-brand" href="./index.html">hercegovina events</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">danas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">vikend</a>
+                    </li>
+                </ul>
+
+                <form class="form-inline my-2 my-lg-0">
+                    <ul class="navbar-nav mr-auto">
+
+                        <li class="nav-item">
+                            <a href="./login.html" class="nav-link">odjavi se</a>
+                        </li>
+                    </ul>
+                </form>
+
+            </div>
+        </nav>
+    </div>
+
+    <!-- ADMIN CONSOLE -->
+    <div id="admin" class="bg-dark py-5">
+        <div class="container-fluid">
+            <div class="heading text-center">
+                <h1 class="text-light mb-3">Admin konzola</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 my-3">
+                    <nav>
+                        <div class="nav-pills nav flex-column" role="navigation" id="nav-pills">
+                            <a class="nav-link active" id="adminPanelPill" data-toggle="tab" href="#adminPanel"
+                                role="tab" aria-controls="adminPanel" aria-selected="true">Admin panel</a>
+                            <a class="nav-link" id="adminUserPill" data-toggle="tab" href="#adminUser" role="tab"
+                                aria-controls="adminUser" aria-selected="true">Korisnici</a>
+                            <a class="nav-link" id="adminModeratorPill" data-toggle="tab" href="#adminModerator"
+                                role="tab" aria-controls="adminModerator" aria-selected="true">Moderatori</a>
+                            <a class="nav-link" id="adminAdminPill" data-toggle="tab" href="#adminAdmin" role="tab"
+                                aria-controls="adminAdmin" aria-selected="true">Administratori</a>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="tab-content" id="adminTabContent">
+                        <div class="tab-pane fade show active" id="adminPanel" role="tabpanel"
+                            aria-labelledby="adminPanelPill">
+
+                            <div class="row text-center text-light">
+                                <div class="col-md-6">
+                                    <p class="lead">Broj korisnika:</p>
+                                    <h1 class="display-1 accentColor" id="numOfUsers">
+                                        <div class="spinner-grow mb-4" style="width: 3rem; height: 3rem;" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </h1>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <p class="lead">Broj eventova:</p>
+                                    <h1 class="display-1 accentColor" id="numOfEvents">
+                                        <div class="spinner-grow mb-4" style="width: 3rem; height: 3rem;" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </h1>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="adminUser" role="tabpanel" aria-labelledby="adminUserPill">
+                            <div id="listUsers">
+
+                                <h3 class="text-light my-3">Popis svih korisnika</h3>
+
+                                <div class="table-responsive" style="border-radius: 3px;">
+                                    <table class="table table-light">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Ime</th>
+                                                <th scope="col">E-mail</th>
+                                                <th scope="col">Uloga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="userTableBody">
+                                            <tr v-for="user in users">
+                                                <th scope="row">{{ user.username }}</th>
+                                                <td>{{ user.email }}</td>
+                                                <td> {{ user.tipKorisnika === 99 ? "Administrator" : (user.tipKorisnika === 10 ? "Moderator" : "Korisnik") }}
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="adminModerator" role="tabpanel"
+                            aria-labelledby="adminModeratorPill">
+
+                            <div id="editModerators" class="my-3">
+                                <h3 class="text-light my-3">Izmjeni moderatore</h3>
+                                <label for="editModeratorInput" class="text-light">Unesite email korisnika</label>
+                                <input type="email" class="form-control mb-1" id="editModeratorInput"
+                                    placeholder="Email">
+
+                                <div class="alert alert-success mt-4" id="moderatorSuccessAlert" role="alert"
+                                    style="display: none;"></div>
+                                <div class="alert alert-danger mt-4" id="moderatorErrorAlert" role="alert"
+                                    style="display: none;"></div>
+
+                                <button class="btn btn-success mr-2 my-2" data-toggle="modal"
+                                    data-target="#addModeratorModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-person-plus-fill mb-1 mr-1" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                        <path fill-rule="evenodd"
+                                            d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                                    </svg>
+                                    Dodaj moderatora</button>
+
+                                <!-- add moderator modal -->
+                                <div class="modal fade" id="addModeratorModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="addModeratorModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Dodavanje moderatora</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Da li želite ovog korisnika promovirati u moderatora?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Odustani</button>
+                                                <button type="button" class="btn btn-success" data-dismiss="modal"
+                                                    onclick="addModerator()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        fill="currentColor" class="bi bi-person-plus-fill mb-1 mr-1"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                                                    </svg>
+                                                    Dodaj moderatora</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-danger my-2" data-toggle="modal"
+                                    data-target="#removeModeratorModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-person-dash-fill mb-1 mr-1" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                                        <path
+                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                    Ukloni moderatora</button>
+
+                                <!-- remove moderator modal -->
+                                <div class="modal fade" id="removeModeratorModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="removeModeratorModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Uklanjanje moderatora
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Da li želite ovom korisniku ukloniti ulogu moderatora?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Odustani</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                                    onclick="deleteModerator()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        fill="currentColor" class="bi bi-person-dash-fill mb-1 mr-1"
+                                                        viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                                                        <path
+                                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                                    </svg>
+                                                    Ukloni moderatora</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="listModerators" class="my-3 pt-3">
+                                <h3 class="text-light my-3">Popis svih moderatora</h3>
+                                <div class="table-responsive" style="border-radius: 3px;">
+                                    <table class="table table-light">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Ime</th>
+                                                <th scope="col">E-mail</th>
+                                                <th scope="col">Uloga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="moderatorTableBody">
+                                            <tr v-for="moderator in moderators">
+                                                <th scope="row">{{ moderator.username }}</th>
+                                                <td>{{ moderator.email }}</td>
+                                                <td> {{ moderator.tipKorisnika === 99 ? "Administrator" : (moderator.tipKorisnika === 10 ? "Moderator" : "Korisnik") }}
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="adminAdmin" role="tabpanel" aria-labelledby="adminAdminPill">
+                            <div id="listAdmins">
+
+                                <h3 class="text-light my-3">Popis svih administratora</h3>
+
+                                <div class="table-responsive" style="border-radius: 3px;">
+                                    <table class="table table-light">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Ime</th>
+                                                <th scope="col">E-mail</th>
+                                                <th scope="col">Uloga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="adminTableBody">
+                                            <tr v-for="admin in admins">
+                                                <th scope="row">{{ admin.username }}</th>
+                                                <td>{{ admin.email }}</td>
+                                                <td> {{ admin.tipKorisnika === 99 ? "Administrator" : (admin.tipKorisnika === 10 ? "Moderator" : "Korisnik") }}
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000"
+        style="position: absolute; bottom: 10px; right: 10px; width: 250px">
+        <div class="toast-header">
+            <svg width="1em" height="1em" style="margin-right: 5px;" viewBox="0 0 16 16" class="bi bi-check2"
+                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+            </svg>
+            <strong class="mr-auto">hercegovina events</strong>
+            <small class="text-muted">prije 1s</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Uspješno dodan moderator!
+        </div>
+    </div>
+
 </body>
 
 
@@ -80,18 +361,10 @@
 
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-functions.js"></script>
 
-
-<script>
-
-
-
-</script>
-
-<script>
-    
-</script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
 <script src="./firebaseConnect.js"></script>
 <script src="./auth.js"></script>
 <script src="./admin.js"></script>
+
 </html>
