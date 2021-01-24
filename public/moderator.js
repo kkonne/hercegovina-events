@@ -349,7 +349,7 @@ uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
           
     }
 
-
+  
 function optionList(){
     var user = firebase.auth().currentUser;
     var query = firebase.database().ref("objects")
@@ -358,12 +358,9 @@ function optionList(){
         var myOptionClubbing = "<option id='clubbingOption'></option>";
         var myOptionBar = "<option id='barOption'></option>";
         snapshot.forEach(function(childSnapshot) {
-            var city  = childSnapshot.child("city").val();
-            var adress = childSnapshot.child("adress").val();
             var userId = childSnapshot.child("userId").val();
             var name = childSnapshot.child("name").val();
             var type = childSnapshot.child("type").val();
-            var coordinates = childSnapshot.child("coordinates").val();
         
             if(user.uid+name == userId+name){
                 if(type == "Club"){
@@ -379,55 +376,63 @@ function optionList(){
         })
     })   
 }
+let deleteEvent = (some) => {
+        
+    eventsImgRef = firebase.storage().ref("eventImages/"+some);
+   
+
+    eventsImgRef.delete().then(function(){
+        eventsRef = firebase.database().ref('events/'+some);
+        eventsRef.remove();
+        alert("Uspješno izbrisan event!");
+    }).catch(function(error){
+        console.log(error)
+    })
+}
+
 
 function eventHistory(){ 
-
-    let deleteEvent = (some) => {
-        
-        eventsImgRef = firebase.storage().ref("eventImages").child(some);
-        console.log(eventsImgRef)
-
-        eventsImgRef.delete().then(function(){
-            eventsRef = firebase.database().ref('events/'+some);
-            eventsRef.remove();
-            alert("Uspješno izbrisan event "+some);
-        }).catch(function(error){
-            console.log(error)
-        })
-    }
-    
     var query = firebase.database().ref("events");
     query.on("value",(data)=>{
+
       var posts = data.val();
       var user = firebase.auth().currentUser;
+
       document.getElementById("historyList").innerHTML = '<br><h3>Povijest vaših eventova</h3><br>'
       
       for(const post in posts){
-
- 
           if(posts[post].userIdOfEvent == user.uid){
-              
+            
            if(posts[post].objectName == undefined){
+               
         document.getElementById("historyList").innerHTML +=
         `
-        <li class="list-group-item">${posts[post].eventName}<span style="float: right;"></span></li>
+        
+        <li class="list-group-item">${posts[post].eventName}<span style="float: right;"></span><button class="deleteEventButtons" id="${posts[post].eventId}">Izbriši</button></li>
+        
 
         `
+        
       }else{
         document.getElementById("historyList").innerHTML +=
         `
 
-        <li class="list-group-item">${posts[post].eventName}<span style="float: right;"></span></li>
+        <li class="list-group-item">${posts[post].eventName}<span style="float: right;"></span><button class="deleteEventButtons" id="${posts[post].eventId}">Izbriši</button></li>
    
         `
-      }
+      }   
     }
+    
       }
-  
+      $('.deleteEventButtons').on('click', function(){
+        $(this).parent().remove();
+        if($(this).parent().remove()){
+            deleteEvent(this.id);
+        }
+      });
+     
     })
   }
-  
-
 
   let editImage = () => {
     let error = document.getElementById("eventImageError");
@@ -450,6 +455,7 @@ function eventHistory(){
     }
 };
 
+
 function clearFields(){
         
     document.getElementById("eventNameInput").value = "";
@@ -469,5 +475,6 @@ function clearFields(){
     editImage();
 
 }
+
 
 
