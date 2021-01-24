@@ -106,10 +106,27 @@ function postovi(){ // samo logovi od eventova za postove
   var query = firebase.database().ref("events");
   query.on("value",(data)=>{
     var posts = data.val();
-    
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy +  mm  + dd;
+
+    todayDate = parseInt(today);
+
    
     document.getElementById("allEvents").innerHTML = ''
     for(const post in posts){
+      var splitedDate = posts[post].eventDate.split("-");
+      var eventDateJoin = splitedDate.join('');
+      var eventDate = parseInt(eventDateJoin);
+      if(todayDate > eventDate){
+        firebase.storage().ref('eventImages/'+posts[post].eventId).delete();
+        firebase.database().ref('events/' + posts[post].eventId).remove();
+      }
+     
          if(posts[post].objectName == undefined){
       document.getElementById("allEvents").innerHTML +=
       `<tr>
