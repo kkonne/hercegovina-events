@@ -125,6 +125,9 @@ function postovi(){ // samo logovi od eventova za postove
       if(todayDate > eventDate){
         firebase.storage().ref('eventImages/'+posts[post].eventId).delete();
         firebase.database().ref('events/' + posts[post].eventId).remove();
+       
+        
+        
       }
      
          if(posts[post].objectName == undefined){
