@@ -102,6 +102,7 @@ window.onclick = function(event) {
     }
   }
 }
+
 function postovi(){ // samo logovi od eventova za postove
   var query = firebase.database().ref("events");
   query.on("value",(data)=>{
@@ -113,7 +114,7 @@ function postovi(){ // samo logovi od eventova za postove
     var yyyy = today.getFullYear();
 
     today = yyyy +  mm  + dd;
-
+    console.log(today)
     todayDate = parseInt(today);
 
    
@@ -124,10 +125,7 @@ function postovi(){ // samo logovi od eventova za postove
       var eventDate = parseInt(eventDateJoin);
       if(todayDate > eventDate){
         firebase.storage().ref('eventImages/'+posts[post].eventId).delete();
-        firebase.database().ref('events/' + posts[post].eventId).remove();
-       
-        
-        
+        firebase.database().ref('events/' + posts[post].eventId).remove();  
       }
      
          if(posts[post].objectName == undefined){
