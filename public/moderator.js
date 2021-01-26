@@ -162,7 +162,8 @@ function addEvent(){
                         eventCity:snapshot.child("city").val(),
                         eventAdress:snapshot.child("adress").val(),
                         eventCoordinates:snapshot.child("coordinates").val(),
-                        objectName:snapshot.child("name").val()
+                        objectName:snapshot.child("name").val(),
+                        trending:false,
         
                 })
                 }
@@ -195,7 +196,8 @@ function addEvent(){
                         eventCity:snapshot.child("city").val(),
                         eventAdress:snapshot.child("adress").val(),
                         eventCoordinates:snapshot.child("coordinates").val(),
-                        objectName:snapshot.child("name").val()
+                        objectName:snapshot.child("name").val(),
+                        trending:false,
         
                 })
                 }
@@ -220,6 +222,7 @@ function addEvent(){
                  eventCoordinates:concertCoordinates,
                  eventCity:concertCity,
                  eventAdress:concertAdress,
+                 trending:false,
          })
      
       
@@ -241,6 +244,7 @@ function addEvent(){
                 eventCoordinates:festivalCoordinates,
                 eventCity:festivalCity,
                 eventAdress:festivalAdress,
+                trending:false,
         })
         
      
@@ -379,15 +383,13 @@ function optionList(){
 let deleteEvent = (some) => {
         
     eventsImgRef = firebase.storage().ref("eventImages/"+some);
-   
+    eventsRef = firebase.database().ref('events/'+some);
 
-    eventsImgRef.delete().then(function(){
-        eventsRef = firebase.database().ref('events/'+some);
+    if(some){
+        eventsImgRef.delete();
         eventsRef.remove();
-        alert("Uspješno izbrisan event!");
-    }).catch(function(error){
-        console.log(error)
-    })
+    }
+   
 }
 
 

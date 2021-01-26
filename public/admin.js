@@ -73,10 +73,74 @@ let listUsers = () => {
   });
 };
 
+
+
+let deleteEvent = (some) => {
+
+
+  let eventsRef = firebase.database().ref('events/'+some);
+  let eventsImgRef = firebase.storage().ref("eventImages/"+some);
+
+  if(some){
+    refreshEventTable();
+    eventsImgRef.delete()
+    eventsRef.remove();
+  }
+}
+
+let addTrending = (some) => {
+  
+}
+
+
+let deleteTrending = (some) => {
+  
+}
+
+
+let listEvents = () => {
+ 
+  let query = firebase.database().ref("events");
+  let allEvents = [];
+  query.on("value", snapshot => {
+    refreshEventTable();
+    snapshot.forEach((childSnapshot) => {
+      allEvents.push(childSnapshot.val());
+    });
+  });
+  
+  new Vue({
+    el: "#listEvents",
+    data: {
+      events: allEvents,
+    },
+    methods: {
+      deleteEvent: function (event) {
+        deleteEvent(event.target.id);
+        
+      },
+      addTrending: function (event){
+        addTrending(event.target.id);
+
+        
+      },
+      deleteTrending: function(event){
+        deleteTrending(event.target.id);
+        
+      },
+    }
+  });
+};
+
 let refreshTable = () => {
   document.getElementById("moderatorTableBody").innerHTML = "";
   document.getElementById("adminTableBody").innerHTML = "";
   document.getElementById("userTableBody").innerHTML = "";
+  document.getElementById("eventsTableBody").innerHTML = "";
+};
+
+let refreshEventTable = () => {
+  document.getElementById("eventsTableBody").innerHTML = "";
 };
 
 let deleteModerator = () => {
@@ -231,4 +295,5 @@ let addModerator = () => {
 };
 
 listUsers();
+listEvents();
 adminPanelData();
