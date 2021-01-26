@@ -160,7 +160,7 @@ function addEvent(){
                         eventTime:eventTime,
                         eventType:snapshot.child("type").val(),
                         eventCity:snapshot.child("city").val(),
-                        eventAdress:snapshot.child("adress").val(),
+                        eventAddress:snapshot.child("adress").val(),
                         eventCoordinates:snapshot.child("coordinates").val(),
                         objectName:snapshot.child("name").val(),
                         trending:false,
@@ -194,7 +194,7 @@ function addEvent(){
                         eventTime:eventTime,
                         eventType:snapshot.child("type").val(),
                         eventCity:snapshot.child("city").val(),
-                        eventAdress:snapshot.child("adress").val(),
+                        eventAddress:snapshot.child("adress").val(),
                         eventCoordinates:snapshot.child("coordinates").val(),
                         objectName:snapshot.child("name").val(),
                         trending:false,
@@ -219,9 +219,10 @@ function addEvent(){
                  description:eventDescription,
                  eventDate:eventDate,
                  eventTime:eventTime,
+                 eventType:"Koncert",
                  eventCoordinates:concertCoordinates,
                  eventCity:concertCity,
-                 eventAdress:concertAdress,
+                 eventAddress:concertAdress,
                  trending:false,
          })
      
@@ -241,9 +242,10 @@ function addEvent(){
                 description:eventDescription,
                 eventDate:eventDate,
                 eventTime:eventTime,
+                eventType:"Festival",
                 eventCoordinates:festivalCoordinates,
                 eventCity:festivalCity,
-                eventAdress:festivalAdress,
+                eventAddress:festivalAdress,
                 trending:false,
         })
         
