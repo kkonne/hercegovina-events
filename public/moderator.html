@@ -60,6 +60,15 @@
         .default {
             margin: 15vh 0;
         }
+
+        #nav-pills a {
+            color: #eb6363;
+        }
+
+        #nav-pills a.active {
+            color: #f7f7f7;
+            background-color: #eb6363;
+        }
     </style>
 </head>
 
@@ -91,7 +100,7 @@
                 <form class="form-inline my-2 my-lg-0">
                     <ul class="navbar-nav mr-auto">
 
-                        
+
                     </ul>
                 </form>
 
@@ -114,32 +123,61 @@
             </div>
 
             <div class="default text-center">
-                <img height="200" width="200"
-                    alt="Profile picture" class="img-thumbnail" id="moderatorPhoto"> 
+                <img height="200" width="200" alt="Profile picture" class="img-thumbnail" id="moderatorPhoto">
                 <br><br>
                 <h3>Dobrodošli</h3>
                 <h1 id="moderatorName"></h1>
-
             </div>
 
-            <ul class="nav nav-pills nav-justified">
-                <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#profile"onclick="eventHistory()">Profil</a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#events" onclick="optionList()">Eventovi</a></li>
+            <ul class="nav nav-pills nav-justified" id="nav-pills">
+                <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#profile"
+                        onclick="userEventsHistory()">Profil</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#events"
+                        onclick="optionList()">Eventovi</a></li>
                 <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#objects">Objekti</a></li>
             </ul>
 
             <div class="tab-content">
+
+                <!-- profil tab-->
                 <div id="profile" class="tab-pane fade">
                     <div class="profil">
                         <h1>Profil</h1>
 
+                        <h3>Povijest vaših eventova</h3>
+                        <div class="event-history" id="userEventsList">
+                            <table class="table table-light rounded">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Naziv</th>
+                                        <th scope="col">Datum</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userEventsTable">
+                                    <tr v-for="event in userEventsData">
+                                        <th scope="row" class="align-middle">{{ event.eventName }}</th>
+                                        <td class="align-middle">{{ event.eventDate }}</td>
+                                        <td class="align-middle">
+                                            <button class="float-right btn btn-danger" v-bind:id=event.eventId
+                                                onclick="deleteEvent(this.id)" style="background-color: #eb6363;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
 
-                        <div class="event-history" id="historyList">
-                            <ul class="list-group">
-                            </ul>
+                                </tbody>
+                            </table>
                         </div>
+                        <div class="alert alert-danger" role="alert" id="userEventsError" style="display: none;"></div>
                     </div>
                 </div>
+
+                <!-- eventovi tab -->
                 <div id="events" class="tab-pane fade">
 
                     <div class="dodaj-event" id="dodajEvent">
@@ -155,7 +193,7 @@
                         <br>
                         <input type="text" name="eventName" id="eventNameInput" class="btn-block form-control">
                         <br>
-                        
+
                         <label for="eventImageInput">Fotografija eventa</label>
                         <div class="alert alert-danger" role="alert" style="display: none;" id="eventImageError"></div>
                         <input type="file" name="eventImage" id="eventImageInput" class="form-control-file"
@@ -164,17 +202,18 @@
                         <img id="eventImageInputPreview" alt="Event Image Preview" width="100%" height="100%"
                             class="mt-2 img-fluid rounded" style="display: none">
 
-                        <p class="small text-muted">za najbolje rezultate omjer slike treba biti 16:9</p>
-                        <button class="btn btn-primary my-1" id="addEventImageButton" style="display:none"
+                        <p class="small text-muted">najveća dopuštena veličina 10MB / za najbolje rezultate omjer slike
+                            treba biti 16:9</p>
+                        <button class="btn btn-outline-light mt-1 mb-3" id="addEventImageButton" style="display:none"
                             onclick="editImage()">Izmijeni sliku</button>
 
-                      
+
                         <div class="eventDescriptionTextArea">
                             <label for="eventDescriptionInput">Opis eventa</label>
                             <textarea class="form-control" id="eventDescriptionInput" rows="3"></textarea>
                         </div>
                         <br>
-                        
+
                         <div class="form-row">
 
 
@@ -197,7 +236,7 @@
                             <div>
                                 <div>
                                     <input type="radio" class="form-check-input" name="typeOfEvent" id="clubbingInput"
-                                        required  onclick="optionList()">
+                                        required onclick="optionList()">
                                     <label for="clubbingInput" class="form-check-label">Clubbing</label>
 
                                     <div class="reveal-if-active">
@@ -210,7 +249,8 @@
                                 </div>
 
                                 <div>
-                                    <input type="radio" class="form-check-input" name="typeOfEvent" id="barLoungeInput" required onclick="optionList()">
+                                    <input type="radio" class="form-check-input" name="typeOfEvent" id="barLoungeInput"
+                                        required onclick="optionList()">
                                     <label for="barLoungeInput" class="form-check-label">Bar/lounge</label>
 
                                     <div class="reveal-if-active">
@@ -224,7 +264,7 @@
 
                                 <div>
                                     <input type="radio" class="form-check-input" name="typeOfEvent" id="concertInput"
-                                        required  onclick="optionList()">
+                                        required onclick="optionList()">
                                     <label for="concertInput" class="form-check-label">Koncert</label>
 
                                     <div class="reveal-if-active">
@@ -266,7 +306,7 @@
                                 </div>
                                 <div>
                                     <input type="radio" class="form-check-input" name="typeOfEvent" id="festivalInput"
-                                        required  onclick="optionList()">
+                                        required onclick="optionList()">
                                     <label for="festivalInput" class="form-check-label">Festival</label>
 
                                     <div class="reveal-if-active">
@@ -311,7 +351,8 @@
 
                         <br>
 
-                        <button type="button" class="btn btn-block btn-primary" onclick="addEvent()">
+                        <button type="button" class="btn btn-block btn-danger my-2" onclick="addEvent()"
+                            style="background-color: #eb6363;" id="addEventButton">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle"
                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -319,9 +360,14 @@
                                 <path fill-rule="evenodd"
                                     d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                             </svg>
-                            Dodaj event</button>
+                            Dodaj event
+                        </button>
+                        <div class="alert alert-success" role="alert" id="addEventSuccess" style="display: none;"></div>
+                        <div class="alert alert-danger" role="alert" id="addEventError" style="display: none;"></div>
                     </div>
                 </div>
+
+                <!-- objekti tab -->
                 <div id="objects" class="tab-pane fade">
 
                     <div class="dodaj-objekt">
@@ -345,9 +391,6 @@
                         <p class="small"><a
                                 href="https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en"
                                 target="_blank">Kako naći koordinate objekta?</a></p>
-
-                        <!-- https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en -->
-
 
                         <div class="form-row">
                             <div class="col-4">
@@ -385,7 +428,8 @@
 
                         <br>
 
-                        <button type="button" class="btn btn-block btn-primary" id="buttonAddObject" onclick="addObject()">
+                        <button type="button" class="btn btn-block btn-danger my-2" id="addObjectButton"
+                            style="background-color: #eb6363;" onclick="addObject()">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle"
                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -393,7 +437,11 @@
                                 <path fill-rule="evenodd"
                                     d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                             </svg>
-                            Dodaj objekt</button>
+                            Dodaj objekt
+                        </button>
+                        <div class="alert alert-danger" role="alert" id="addObjectError" style="display: none;"></div>
+                        <div class="alert alert-success" role="alert" id="addObjectSuccess" style="display: none;">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -428,8 +476,8 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
-<!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 
 <script src="./firebaseConnect.js"></script>
 <script src="./auth.js"></script>

@@ -40,6 +40,7 @@ let listUsers = () => {
   let allModerators = [];
   let allAdmins = [];
   let allUsers = [];
+
   query.on("value", snapshot => {
     snapshot.forEach((childSnapshot) => {
 
@@ -48,6 +49,7 @@ let listUsers = () => {
         (childSnapshot.child("tipKorisnika").val() === 10 ?
           allModerators.push(childSnapshot.val()) && allUsers.push(childSnapshot.val()) :
           allUsers.push(childSnapshot.val()));
+
     });
   });
 
@@ -74,7 +76,7 @@ let listUsers = () => {
 };
 
 let listEvents = () => {
- 
+
   let query = firebase.database().ref("events");
   let allEvents = [];
   query.on("value", snapshot => {
@@ -83,7 +85,7 @@ let listEvents = () => {
       allEvents.push(childSnapshot.val());
     });
   });
-  
+
   new Vue({
     el: "#listEvents",
     data: {
@@ -91,27 +93,27 @@ let listEvents = () => {
     },
     methods: {
       deleteEvent: function (event) {
-       
-        if(event){
-            let query = firebase.database().ref("events");
+
+        if (event) {
+          let query = firebase.database().ref("events");
           query.once("value")
             .then(function (snapshot) {
               snapshot.forEach((childSnapshot) => {
                 let eventId = childSnapshot.child("eventId").val()
-                if(eventId == event.target.id){
-                  let eventsRef = firebase.database().ref('events/'+eventId);
-                  let eventsImgRef = firebase.storage().ref("eventImages/"+eventId);
+                if (eventId == event.target.id) {
+                  let eventsRef = firebase.database().ref('events/' + eventId);
+                  let eventsImgRef = firebase.storage().ref("eventImages/" + eventId);
                   eventsRef.remove();
                   eventsImgRef.delete()
                 }
-              
+
               })
-          })
-        
-      }
+            })
+
+        }
       },
-      addTrending: function (event){
-        if(event){
+      addTrending: function (event) {
+        if (event) {
           let query = firebase.database().ref("events");
           query.once("value")
             .then(function (snapshot) {
@@ -129,87 +131,87 @@ let listEvents = () => {
                 let eventTime = childSnapshot.child("eventTime").val()
                 let eventType = childSnapshot.child("eventType").val()
                 let userIdOfEvent = childSnapshot.child("userIdOfEvent").val()
-        
-                if(childSnapshot.child("objectName")  && eventId == event.target.id){
+
+                if (childSnapshot.child("objectName") && eventId == event.target.id) {
                   let objectName = childSnapshot.child("objectName").val()
                   firebase.database().ref('events/' + event.target.id).set({
-        
+
                     description: description,
-                    
+
                     eventAdded: eventAdded,
-                    
+
                     eventAddress: eventAddress,
-                   
+
                     eventCity: eventCity,
-                    
+
                     eventCoordinates: eventCoordinates,
-                  
+
                     eventDate: eventDate,
-                   
+
                     eventDateTime: eventDateTime,
-                 
+
                     eventId: eventId,
-                    
+
                     eventImgUrl: eventImgUrl,
-                    
+
                     eventName: eventName,
-              
+
                     eventTime: eventTime,
-                    
+
                     eventType: eventType,
-                  
+
                     objectName: objectName,
-                    
+
                     trending: true,
-        
+
                     userIdOfEvent: userIdOfEvent
-                    
-                    
+
+
                   });
-                }else if(!childSnapshot.child("objectName") && eventId == event.target.id){
-        
+                } else if (!childSnapshot.child("objectName") && eventId == event.target.id) {
+
                   firebase.database().ref('events/' + event.target.id).set({
-        
+
                     description: description,
-                    
+
                     eventAdded: eventAdded,
-                    
+
                     eventAddress: eventAddress,
-                   
+
                     eventCity: eventCity,
-                    
+
                     eventCoordinates: eventCoordinates,
-                  
+
                     eventDate: eventDate,
-                   
+
                     eventDateTime: eventDateTime,
-                 
+
                     eventId: eventId,
-                    
+
                     eventImgUrl: eventImgUrl,
-                    
+
                     eventName: eventName,
-              
+
                     eventTime: eventTime,
-                    
+
                     eventType: eventType,
-                    
+
                     trending: true,
-        
+
                     userIdOfEvent: userIdOfEvent
-                    
-                    
+
+
                   });
-        
+
                 }
               })
             })
         };
 
-        
+
       },
-      deleteTrending: function(event){
-        if(event){
+      deleteTrending: function (event) {
+        if (event) {
           var query = firebase.database().ref("events");
           query.once("value")
             .then(function (snapshot) {
@@ -227,101 +229,96 @@ let listEvents = () => {
                 let eventTime = childSnapshot.child("eventTime").val()
                 let eventType = childSnapshot.child("eventType").val()
                 let userIdOfEvent = childSnapshot.child("userIdOfEvent").val()
-                if(childSnapshot.child("objectName")  && eventId == event.target.id){
+                if (childSnapshot.child("objectName") && eventId == event.target.id) {
                   let objectName = childSnapshot.child("objectName").val()
                   firebase.database().ref('events/' + event.target.id).set({
-        
+
                     description: description,
-                    
+
                     eventAdded: eventAdded,
-                    
+
                     eventAddress: eventAddress,
-                   
+
                     eventCity: eventCity,
-                    
+
                     eventCoordinates: eventCoordinates,
-                  
+
                     eventDate: eventDate,
-                   
+
                     eventDateTime: eventDateTime,
-                 
+
                     eventId: eventId,
-                    
+
                     eventImgUrl: eventImgUrl,
-                    
+
                     eventName: eventName,
-              
+
                     eventTime: eventTime,
-                    
+
                     eventType: eventType,
-                  
+
                     objectName: objectName,
-                    
+
                     trending: false,
-        
+
                     userIdOfEvent: userIdOfEvent
-                    
-                    
+
+
                   });
-                }else if(!childSnapshot.child("objectName") && eventId == event.target.id){
-        
+                } else if (!childSnapshot.child("objectName") && eventId == event.target.id) {
+
                   firebase.database().ref('events/' + event.target.id).set({
-                    
+
                     description: description,
-                    
+
                     eventAdded: eventAdded,
-                    
+
                     eventAddress: eventAddress,
-                   
+
                     eventCity: eventCity,
-                    
+
                     eventCoordinates: eventCoordinates,
-                  
+
                     eventDate: eventDate,
-                   
+
                     eventDateTime: eventDateTime,
-                 
+
                     eventId: eventId,
-                    
+
                     eventImgUrl: eventImgUrl,
-                    
+
                     eventName: eventName,
-              
+
                     eventTime: eventTime,
-                    
+
                     eventType: eventType,
-                    
+
                     trending: false,
-        
+
                     userIdOfEvent: userIdOfEvent
-        
+
                   });
-        
+
                 }
               })
             })
         }
-        
+
       },
     }
   });
 };
 
-let deleteEvent = (some) => {
+let deleteEvent = (eventId) => {
+  if (eventId) {
+    let eventsRef = firebase.database().ref('events/' + eventId);
+    let eventsImgRef = firebase.storage().ref("eventImages/" + eventId);
 
-
-  let eventsRef = firebase.database().ref('events/'+some);
-  let eventsImgRef = firebase.storage().ref("eventImages/"+some);
-
-  if(some){
     refreshEventTable();
     eventsImgRef.delete()
     eventsRef.remove();
-  }
-}
-
-
-
+  };
+};
 
 let refreshTable = () => {
   document.getElementById("moderatorTableBody").innerHTML = "";

@@ -107,7 +107,7 @@ function uploadImage() {
 
 }
 
-function postovi() { // samo logovi od eventova za postove
+let listEvents = () => {
   var query = firebase.database().ref("events");
   query.on("value", (data) => {
     let posts = data.val();
@@ -116,18 +116,19 @@ function postovi() { // samo logovi od eventova za postove
       document.getElementById("eventsError").style.display = "block";
       document.getElementById("eventList").style.display = "none";
       document.getElementById("eventsError").innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Pokušajte ponovno kasnije!";
-    }
+    } else {
+      new Vue({
+        el: "#eventList",
+        data: {
+          eventsData: posts,
+        },
+      });
+    };
 
-    new Vue({
-      el: "#eventList",
-      data: {
-        eventsData: posts,
-      },
-    });
+
 
   })
-}
-postovi();
+};
 
 let editUserImage = () => {
 
@@ -141,3 +142,5 @@ let editUserImage = () => {
   fileInput.value = null;
   fileInput.style.display = "block";
 };
+
+listEvents();
