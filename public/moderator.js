@@ -424,34 +424,25 @@ let deleteEvent = (eventId) => {
 
 
 let userEventsHistory = () => {
-    let userEvents = [];
     let query = firebase.database().ref("events");
     let userEventsList = document.getElementById("userEventsList");
     let counter = 0;
-    // let userEventsTable = document.getElementById("userEventsList");
-
-
-    query.on("value", (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-            let loggedInUser = firebase.auth().currentUser;
-            if (childSnapshot.child("userIdOfEvent").val() == loggedInUser.uid) {
-                userEvents.push(childSnapshot.val());
-                counter++;
-            };
-        });
-    });
 
     let userEventsError = document.getElementById("userEventsError");
 
-    // console.log(counter);
+    query.on("value", (snapshot) => {
+        let userEvents = [];
+        if (snapshot.val()) {
+            snapshot.forEach((childSnapshot) => {
+                let loggedInUser = firebase.auth().currentUser;
+                if (childSnapshot.child("userIdOfEvent").val() == loggedInUser.uid) {
+                    userEvents.push(childSnapshot.val());
+                    counter++;
+                };
+            });
 
-    if (!counter) {
-        userEventsList.innerHTML = "";
-        userEventsError.innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Dodajte eventove da biste ih vidjeli ovdje!";
-        userEventsError.style.display = "block";
-    } else {
-        userEventsError.style.display = "none";
-        userEventsList.innerHTML = `<table class="table table-light rounded">
+            userEventsError.style.display = "none";
+            userEventsList.innerHTML = `<table class="table table-light rounded">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Naziv</th>
@@ -474,15 +465,29 @@ let userEventsHistory = () => {
                                             </button>
                                         </td>
                                     </tr>
-
                                 </tbody>
                             </table>`;
-        new Vue({
-            el: "#userEventsList",
-            data: {
-                userEventsData: userEvents,
-            },
-        });
+            new Vue({
+                el: "#userEventsList",
+                data: {
+                    userEventsData: userEvents,
+                },
+            });
+        } else {
+            userEventsList.innerHTML = "";
+            userEventsError.innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Dodajte eventove da biste ih vidjeli ovdje!";
+            userEventsError.style.display = "block";
+        };
+    });
+
+
+
+    // console.log(counter);
+
+    if (!counter) {
+
+    } else {
+
     };
 };
 
