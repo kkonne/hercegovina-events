@@ -309,8 +309,8 @@
         <div class="alert alert-danger mx-5 text-center mt-3" id="eventsError" role="alert" style="display: none;">
         </div>
 
-        <div class="py-3 my-3">
-            <div class="row" id="eventList">
+        <div class="py-3 my-3" id="allEventsList">
+            <div class="row">
                 <div class="col-md-4" v-for="event in eventsData">
                     <div class="card bg-dark text-light my-3">
                         <img v-bind:src=event.eventImgUrl alt="Event image" id="eventImage" class="card-img-top cardImg"
@@ -338,8 +338,7 @@
                                         <path
                                             d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                     </svg>
-                                    {{ event.eventDate.split("-")[2] + "." + event.eventDate.split("-")[1] + "." +
-                                    event.eventDate.split("-")[0] + "." }}
+                                    {{ event.eventDate }}
                                 </p>
                             </div>
                         </div>
