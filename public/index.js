@@ -107,89 +107,33 @@ function uploadImage() {
 
 }
 
-/*
-let listEvents = () => {
-  var query = firebase.database().ref("events");
-  query.on("value", (data) => {
-    let posts = data.val();
-
-    if (!posts) {
-      document.getElementById("eventsError").style.display = "block";
-      document.getElementById("eventList").style.display = "none";
-      document.getElementById("eventsError").innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Pokušajte ponovno kasnije!";
-    } else {
-      new Vue({
-        el: "#eventList",
-        data: {
-          eventsData: posts,
-        },
-      });
-    };
-
-
-
-  })
+let refreshEventTable = () => {
+  document.getElementById("eventsListBody").innerHTML = "";
 };
-*/
 
 let listEvents = () => {
   let query = firebase.database().ref("events");
-
+  let allEvents = [];
   query.on("value", snapshot => {
-    let allEvents = [];
-    if (snapshot.val()) {
+    refreshEventTable();
+    if (!snapshot.val()) {
+      document.getElementById("eventsError").innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Pokušajte ponovno kasnije!";
+      document.getElementById("eventsError").style.display = "block";
+      document.getElementById("allEventsList").style.visibility = "hidden";
+    } else {
+      document.getElementById("eventsError").style.display = "none";
+      document.getElementById("allEventsList").style.visibility = "visible";
+
       snapshot.forEach(childSnapshot => {
         allEvents.push(childSnapshot.val());
       });
-      document.getElementById("eventsError").style.display = "none";
-      document.getElementById("allEventsList").innerHTML = `<div class="row">
-                <div class="col-md-4" v-for="event in eventsData">
-                    <div class="card bg-dark text-light my-3">
-                        <img v-bind:src=event.eventImgUrl alt="Event image" id="eventImage" class="card-img-top cardImg"
-                            width="100%">
-                        <div class="card-body">
-                            <p class="card-text float-right">{{ event.objectName }}</p>
-                            <h5 class="card-title" style="color: #eb6363;">{{ event.eventName }}</h5>
-                            <p class="card-text">{{ event.description }}</p>
-                            <div class="eventTime float-left">
-                                <p class="small">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#eb6363"
-                                        class="bi bi-clock-fill mr-1" viewBox="0 0 16 16">
-                                        <path
-                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
-                                    </svg>
-                                    {{ event.eventTime }}
-                                </p>
-                            </div>
-                            <div class="eventDate float-right">
-                                <p class="small">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#eb6363"
-                                        class="bi bi-calendar3 mr-1" viewBox="0 0 16 16">
-                                        <path
-                                            d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z" />
-                                        <path
-                                            d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                                    </svg>
-                                    {{ event.eventDate }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-      document.getElementById("allEventsList").style.display = "block";
-
-      new Vue({
-        el: "#allEventsList",
-        data: {
-          eventsData: allEvents,
-        },
-      });
-    } else {
-      document.getElementById("eventsError").innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Pokušajte ponovno kasnije!";
-      document.getElementById("eventsError").style.display = "block";
-      document.getElementById("allEventsList").style.display = "none";
-    };
+    }
+  });
+  new Vue({
+    el: "#allEventsList",
+    data: {
+      eventsData: allEvents,
+    },
   });
 };
 
