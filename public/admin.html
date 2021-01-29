@@ -334,13 +334,14 @@
 
                         <!-- eventovi tab -->
                         <div class="tab-pane fade" id="adminEvents" role="tabpanel" aria-labelledby="adminEventsPill">
+                            <div class="alert alert-danger" role="alert" id="eventsError"  style="display: none;">Nažalost, nema eventova koje vam možemo prikazati.</div>
                             <div id="listEvents">
 
                                 <h3 class="text-light my-3">Popis svih eventova</h3>
 
                                 <div class="table-responsive" style="border-radius: 3px;">
                                     <table class="table table-light">
-                                        <thead class="thead-light">
+                                        <thead class="thead-light" id="eventsTableHead">
                                             <tr>
                                                 <th scope="col">Naziv eventa</th>
                                                 <th scope="col">Id eventa</th>
@@ -351,15 +352,12 @@
                                         <tbody id="eventsTableBody">
                                             <tr v-for="event in events">
                                                 <th scope="row">{{ event.eventName }}</th>
-                                                <td>{{ event.eventId }}
-
-
-                                                </td>
+                                                <td>{{ event.eventId }}</td>
                                                 <td>
 
 
                                                     <button type="button" class="btn btn-danger"
-                                                        v-if="event.trending === true" v-on:click="deleteTrending"
+                                                        v-if="event.trending === true" v-on:click="changeTrending"
                                                         v-bind:id="event.eventId">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                             fill="currentColor" class="bi bi-dash-circle"
@@ -372,7 +370,7 @@
                                                     </button>
 
                                                     <button type="button" class="btn btn-success"
-                                                        v-if="event.trending === false" v-on:click="addTrending"
+                                                        v-if="event.trending === false" v-on:click="changeTrending"
                                                         v-bind:id="event.eventId">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                             fill="currentColor" class="bi bi-plus-circle"
@@ -403,7 +401,9 @@
 
 
                                 </div>
+                                
                             </div>
+                            
                         </div>
 
                     </div>

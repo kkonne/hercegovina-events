@@ -75,15 +75,26 @@ let listUsers = () => {
   });
 };
 
+let changeTrending = () => {
+
+}
 let listEvents = () => {
 
   let query = firebase.database().ref("events");
   let allEvents = [];
   query.on("value", snapshot => {
     refreshEventTable();
-    snapshot.forEach((childSnapshot) => {
-      allEvents.push(childSnapshot.val());
-    });
+    if(!snapshot.val()){
+      document.getElementById("listEvents").style.visibility = "hidden";
+      document.getElementById("eventsError").style.display = "block";
+    }else{
+      document.getElementById("eventsError").style.display = "none";
+      document.getElementById("listEvents").style.visibility = "visible";
+      snapshot.forEach((childSnapshot) => {
+        allEvents.push(childSnapshot.val());
+      });
+    }
+   
   });
 
   new Vue({
@@ -112,93 +123,83 @@ let listEvents = () => {
 
         }
       },
-      addTrending: function (event) {
+      changeTrending: function (event) {
         if (event) {
           let query = firebase.database().ref("events");
           query.once("value")
             .then(function (snapshot) {
               snapshot.forEach((childSnapshot) => {
-                let description = childSnapshot.child("description").val()
-                let eventAdded = childSnapshot.child("eventAdded").val()
-                let eventAddress = childSnapshot.child("eventAddress").val()
-                let eventCity = childSnapshot.child("eventCity").val()
-                let eventCoordinates = childSnapshot.child("eventCoordinates").val()
-                let eventDate = childSnapshot.child("eventDate").val()
-                let eventDateTime = childSnapshot.child("eventDateTime").val()
-                let eventId = childSnapshot.child("eventId").val()
-                let eventImgUrl = childSnapshot.child("eventImgUrl").val()
-                let eventName = childSnapshot.child("eventName").val()
-                let eventTime = childSnapshot.child("eventTime").val()
-                let eventType = childSnapshot.child("eventType").val()
-                let userIdOfEvent = childSnapshot.child("userIdOfEvent").val()
+                let object = childSnapshot.val();
 
-                if (childSnapshot.child("objectName") && eventId == event.target.id) {
-                  let objectName = childSnapshot.child("objectName").val()
+               
+
+                if (object.objectName && object.eventId == event.target.id) {
+                  
                   firebase.database().ref('events/' + event.target.id).set({
 
-                    description: description,
+                    description: object.description,
 
-                    eventAdded: eventAdded,
+                    eventAdded: object.eventAdded,
 
-                    eventAddress: eventAddress,
+                    eventAddress: object.eventAddress,
 
-                    eventCity: eventCity,
+                    eventCity: object.eventCity,
 
-                    eventCoordinates: eventCoordinates,
+                    eventCoordinates: object.eventCoordinates,
 
-                    eventDate: eventDate,
+                    eventDate: object.eventDate,
 
-                    eventDateTime: eventDateTime,
+                    eventDateTime: object.eventDateTime,
 
-                    eventId: eventId,
+                    eventId: object.eventId,
 
-                    eventImgUrl: eventImgUrl,
+                    eventImgUrl: object.eventImgUrl,
 
-                    eventName: eventName,
+                    eventName: object.eventName,
 
-                    eventTime: eventTime,
+                    eventTime: object.eventTime,
 
-                    eventType: eventType,
+                    eventType: object.eventType,
 
-                    objectName: objectName,
+                    objectName: object.objectName,
 
-                    trending: true,
+                    trending: !(object.trending),
 
-                    userIdOfEvent: userIdOfEvent
+                    userIdOfEvent: object.userIdOfEvent
 
 
                   });
-                } else if (!childSnapshot.child("objectName") && eventId == event.target.id) {
+                } else if (!object.objectName && object.eventId == event.target.id) {
 
                   firebase.database().ref('events/' + event.target.id).set({
 
-                    description: description,
+                    description: object.description,
 
-                    eventAdded: eventAdded,
+                    eventAdded: object.eventAdded,
 
-                    eventAddress: eventAddress,
+                    eventAddress: object.eventAddress,
 
-                    eventCity: eventCity,
+                    eventCity: object.eventCity,
 
-                    eventCoordinates: eventCoordinates,
+                    eventCoordinates: object.eventCoordinates,
 
-                    eventDate: eventDate,
+                    eventDate: object.eventDate,
 
-                    eventDateTime: eventDateTime,
+                    eventDateTime: object.eventDateTime,
 
-                    eventId: eventId,
+                    eventId: object.eventId,
 
-                    eventImgUrl: eventImgUrl,
+                    eventImgUrl: object.eventImgUrl,
 
-                    eventName: eventName,
+                    eventName: object.eventName,
 
-                    eventTime: eventTime,
+                    eventTime: object.eventTime,
 
-                    eventType: eventType,
+                    eventType: object.eventType,
 
-                    trending: true,
+                    trending: !(object.trending),
 
-                    userIdOfEvent: userIdOfEvent
+                    userIdOfEvent: object.userIdOfEvent
 
 
                   });
@@ -208,101 +209,6 @@ let listEvents = () => {
             })
         };
 
-
-      },
-      deleteTrending: function (event) {
-        if (event) {
-          var query = firebase.database().ref("events");
-          query.once("value")
-            .then(function (snapshot) {
-              snapshot.forEach(function (childSnapshot) {
-                let description = childSnapshot.child("description").val()
-                let eventAdded = childSnapshot.child("eventAdded").val()
-                let eventAddress = childSnapshot.child("eventAddress").val()
-                let eventCity = childSnapshot.child("eventCity").val()
-                let eventCoordinates = childSnapshot.child("eventCoordinates").val()
-                let eventDate = childSnapshot.child("eventDate").val()
-                let eventDateTime = childSnapshot.child("eventDateTime").val()
-                let eventId = childSnapshot.child("eventId").val()
-                let eventImgUrl = childSnapshot.child("eventImgUrl").val()
-                let eventName = childSnapshot.child("eventName").val()
-                let eventTime = childSnapshot.child("eventTime").val()
-                let eventType = childSnapshot.child("eventType").val()
-                let userIdOfEvent = childSnapshot.child("userIdOfEvent").val()
-                if (childSnapshot.child("objectName") && eventId == event.target.id) {
-                  let objectName = childSnapshot.child("objectName").val()
-                  firebase.database().ref('events/' + event.target.id).set({
-
-                    description: description,
-
-                    eventAdded: eventAdded,
-
-                    eventAddress: eventAddress,
-
-                    eventCity: eventCity,
-
-                    eventCoordinates: eventCoordinates,
-
-                    eventDate: eventDate,
-
-                    eventDateTime: eventDateTime,
-
-                    eventId: eventId,
-
-                    eventImgUrl: eventImgUrl,
-
-                    eventName: eventName,
-
-                    eventTime: eventTime,
-
-                    eventType: eventType,
-
-                    objectName: objectName,
-
-                    trending: false,
-
-                    userIdOfEvent: userIdOfEvent
-
-
-                  });
-                } else if (!childSnapshot.child("objectName") && eventId == event.target.id) {
-
-                  firebase.database().ref('events/' + event.target.id).set({
-
-                    description: description,
-
-                    eventAdded: eventAdded,
-
-                    eventAddress: eventAddress,
-
-                    eventCity: eventCity,
-
-                    eventCoordinates: eventCoordinates,
-
-                    eventDate: eventDate,
-
-                    eventDateTime: eventDateTime,
-
-                    eventId: eventId,
-
-                    eventImgUrl: eventImgUrl,
-
-                    eventName: eventName,
-
-                    eventTime: eventTime,
-
-                    eventType: eventType,
-
-                    trending: false,
-
-                    userIdOfEvent: userIdOfEvent
-
-                  });
-
-                }
-              })
-            })
-        }
 
       },
     }
