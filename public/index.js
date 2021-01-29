@@ -107,6 +107,7 @@ function uploadImage() {
 
 }
 
+/*
 let listEvents = () => {
   var query = firebase.database().ref("events");
   query.on("value", (data) => {
@@ -128,6 +129,35 @@ let listEvents = () => {
 
 
   })
+};
+*/
+
+let listEvents = () => {
+  let query = firebase.database().ref("events"),
+    allEvents = [];
+
+  query.on("value", snapshot => {
+    if (snapshot.val()) {
+      document.getElementById("eventsError").style.display = "none";
+      document.getElementById("eventList").innerHTML = "";
+      document.getElementById("eventList").style.display = "block";
+
+      snapshot.forEach(childSnapshot => {
+        allEvents.push(childSnapshot.val());
+      });
+
+      new Vue({
+        el: "#eventList",
+        data: {
+          eventsData: allEvents,
+        },
+      });
+    } else {
+      document.getElementById("eventsError").innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Pokušajte ponovno kasnije!";
+      document.getElementById("eventsError").style.display = "block";
+      document.getElementById("eventList").style.display = "none";
+    };
+  });
 };
 
 let editUserImage = () => {

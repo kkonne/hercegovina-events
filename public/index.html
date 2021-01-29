@@ -168,7 +168,8 @@
                                         <path fill-rule="evenodd"
                                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                                     </svg>
-                                    Promijenite svoju sliku</h5>
+                                    Promijenite svoju sliku
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -308,13 +309,14 @@
         <div class="alert alert-danger mx-5 text-center mt-3" id="eventsError" role="alert" style="display: none;">
         </div>
 
-        <div id="eventList" class="py-3 my-3">
-            <div class="row">
+        <div class="py-3 my-3">
+            <div class="row" id="eventList">
                 <div class="col-md-4" v-for="event in eventsData">
                     <div class="card bg-dark text-light my-3">
                         <img v-bind:src=event.eventImgUrl alt="Event image" id="eventImage" class="card-img-top cardImg"
                             width="100%">
                         <div class="card-body">
+                            <p class="card-text float-right">{{ event.objectName }}</p>
                             <h5 class="card-title" style="color: #eb6363;">{{ event.eventName }}</h5>
                             <p class="card-text">{{ event.description }}</p>
                             <div class="eventTime float-left">
@@ -324,7 +326,8 @@
                                         <path
                                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
                                     </svg>
-                                    {{ event.eventTime }}</p>
+                                    {{ event.eventTime }}
+                                </p>
                             </div>
                             <div class="eventDate float-right">
                                 <p class="small">
@@ -335,7 +338,8 @@
                                         <path
                                             d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                     </svg>
-                                    {{ event.eventDate.split("-")[2] + "." + event.eventDate.split("-")[1] + "." + event.eventDate.split("-")[0] + "." }}
+                                    {{ event.eventDate.split("-")[2] + "." + event.eventDate.split("-")[1] + "." +
+                                    event.eventDate.split("-")[0] + "." }}
                                 </p>
                             </div>
                         </div>

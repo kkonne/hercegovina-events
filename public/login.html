@@ -40,8 +40,6 @@
             border: 1px solid #040404;
             border-radius: 10px;
         }
-
-      
     </style>
 </head>
 
@@ -69,7 +67,7 @@
                         <a class="nav-link" href="#">kontakt</a>
                     </li>
                 </ul>
-              
+
 
             </div>
         </nav>
@@ -81,7 +79,7 @@
             <br>
             <img src="./assets/images/hercegovina-events-logo.svg" alt="Hercegovina events logo" width="150px"
                 class="logo-main">
-           <p class="display-4">Prijavi se na Hercegovina Events</p>
+            <p class="display-4">Prijavi se na Hercegovina Events</p>
             <br>
             <div class="login-form text-left">
                 <label for="loginEmail">E-mail</label>
@@ -94,16 +92,18 @@
 
                 <br>
 
-                <button ontype="button" onclick="login()" id="btnLogin" class="btn btn-dark btn-block">Prijavi se</button>
-                <button type="button" class="btn btn-light border btn-block" style="margin-top: 15px;" onclick="loginWithGoogle()"><img
-                    src="./assets/images/google-logo.webp" alt="Google logo"
-                    style="height: 20px;margin-right: 10px;" >Prijavi se putem Google</button>
+                <button ontype="button" id="loginButton" class="btn btn-dark btn-block" onclick="login()">Prijavi
+                    se</button>
+                <button type="button" class="btn btn-light border btn-block" style="margin-top: 15px;"
+                    onclick="loginWithGoogle()"><img src="./assets/images/google-logo.webp" alt="Google logo"
+                        style="height: 20px;margin-right: 10px;">Prijavi se
+                    putem Google</button>
             </div>
             <br>
-        
-            <p>Novi ste? <a href="./register.html">Registriraj se</a></p> 
-		   
-			
+
+            <p>Novi ste? <a href="./register.html">Registriraj se</a></p>
+
+
         </div>
     </div>
 
@@ -119,9 +119,10 @@
 
 
 <script src="./firebaseConnect.js"></script>
-<script src="./auth.js"></script>  <!--Konekcija sa js-->
+<script src="./auth.js"></script>
+<!--Konekcija sa js-->
 <script src="./login.js"></script>
 <script src="loginWithGoogle.js"></script>
 <script src="redirect.js"></script>
-</html>
 
+</html>
