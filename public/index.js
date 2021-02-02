@@ -108,32 +108,99 @@ function uploadImage() {
 }
 
 let refreshEventTable = () => {
-  document.getElementById("eventsListBody").innerHTML = "";
+  document.getElementById("allEventsList").innerHTML = `<div class="row">
+                <div class="col-md-4" v-for="event in eventsData">
+                    <div class="card bg-dark text-light my-3">
+                        <img v-bind:src=event.eventImgUrl alt="Event image" id="eventImage" class="card-img-top cardImg"
+                            width="100%">
+                        <div class="card-body">
+                            <p class="card-text float-right">{{ event.objectName }}</p>
+                            <h5 class="card-title" style="color: #eb6363;">{{ event.eventName }}</h5>
+                            <p class="card-text">{{ event.description }}</p>
+                            <div class="eventTime float-left">
+                                <p class="small">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#eb6363"
+                                        class="bi bi-clock-fill mr-1" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                                    </svg>
+                                    {{ event.eventTime }}
+                                </p>
+                            </div>
+                            <div class="eventDate float-right">
+                                <p class="small">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#eb6363"
+                                        class="bi bi-calendar3 mr-1" viewBox="0 0 16 16">
+                                        <path
+                                            d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z" />
+                                        <path
+                                            d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                                    </svg>
+                                    {{ event.eventDate }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
 };
 
 let listEvents = () => {
-  let query = firebase.database().ref("events");
-  let allEvents = [];
+
+  let filterCity = document.getElementById("filterCityInput").value;
+  let filterType = document.getElementById("filterTypeInput").value;
+
+  let query = firebase.database().ref("events").orderByChild("eventDateTime");
+  
+
   query.on("value", snapshot => {
-    refreshEventTable();
-    if (!snapshot.val()) {
+    let allEvents = [];
+    if (snapshot.val()) {
+      document.getElementById("eventsError").style.display = "none";
+      document.getElementById("allEventsList").innerHTML = "";
+      
+      snapshot.forEach(childSnapshot => {
+        if(filterCity != "" && filterType != ""){
+          document.getElementById("clearFilterButton").style.display = "block"
+          if(filterCity == childSnapshot.val().eventCity && filterType == childSnapshot.val().eventType){
+            allEvents.push(childSnapshot.val());
+          }
+        }else if(filterCity != "" && filterType == ""){
+          document.getElementById("clearFilterButton").style.display = "block"
+          if(filterCity == childSnapshot.val().eventCity){
+            allEvents.push(childSnapshot.val());
+          }
+        }else if(filterCity == "" && filterType != ""){
+          document.getElementById("clearFilterButton").style.display = "block"
+          if(filterType == childSnapshot.val().eventType){
+            allEvents.push(childSnapshot.val());
+          }
+        }else if(filterCity == "" && filterType == "" ){
+          document.getElementById("clearFilterButton").style.display = "none"
+          allEvents.push(childSnapshot.val());
+        }else{
+          alert("Dogodila se nenadana pogreška!");
+        }
+      });
+      if(allEvents.length == 0){
+        document.getElementById("eventsError").innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Pokušajte ponovno kasnije!";
+        document.getElementById("eventsError").style.display = "block";
+        document.getElementById("allEventsList").style.display = "none";
+      }
+      refreshEventTable();
+      document.getElementById("allEventsList").style.display = "block";
+
+      new Vue({
+        el: "#allEventsList",
+        data: {
+          eventsData: allEvents,
+        },
+      });
+    } else {
       document.getElementById("eventsError").innerHTML = "Nažalost, nema eventova koje vam možemo prikazati. Pokušajte ponovno kasnije!";
       document.getElementById("eventsError").style.display = "block";
-      document.getElementById("allEventsList").style.visibility = "hidden";
-    } else {
-      document.getElementById("eventsError").style.display = "none";
-      document.getElementById("allEventsList").style.visibility = "visible";
-
-      snapshot.forEach(childSnapshot => {
-        allEvents.push(childSnapshot.val());
-      });
-    }
-  });
-  new Vue({
-    el: "#allEventsList",
-    data: {
-      eventsData: allEvents,
-    },
+      document.getElementById("allEventsList").style.display = "none";
+    };
   });
 };
 
@@ -150,4 +217,18 @@ let editUserImage = () => {
   fileInput.style.display = "block";
 };
 
+let applyFilters = () => {
+  listEvents();
+}
+let clearFilters = () => {
+  let filterCity = document.getElementById("filterCityInput").value;
+  let filterType = document.getElementById("filterTypeInput").value;
+
+  if(filterCity != "" || filterType != ""){
+    document.getElementById("filterCityInput").value = ""
+    document.getElementById("filterTypeInput").value = ""
+    listEvents();
+  }
+
+}
 listEvents();

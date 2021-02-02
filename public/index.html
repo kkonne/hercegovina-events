@@ -302,6 +302,41 @@
         </div>
     </div>
 
+    
+        <div class="col-6">
+            <select name="filterCity" id="filterCityInput" class="form-control"
+                data-require-pair="#filterCityInput">
+                <option value="">Odaberi grad</option>
+                <option>Posušje</option>
+                <option>Široki Brijeg</option>
+                <option>Mostar</option>
+                <option>Čapljina</option>
+                <option>Grude</option>
+                <option>Tomislavgrad</option>
+                <option>Međugorje</option>
+                <option>Ljubuški</option>
+                <option>Čitluk</option>
+                <option>Jablanica</option>
+                <option>Neum</option>
+            </select>
+        </div>
+      
+            <div class="col-6">
+                <select name="filterType" id="filterTypeInput" class="form-control"
+                    data-require-pair="#filterTypeInput">
+                    <option value="">Odaberi tip eventa</option>
+                    <option>Clubbing</option>
+                    <option>Bar/lounge</option>
+                    <option>Koncert</option>
+                    <option>Festival</option>
+                </select>
+            </div>
+
+            <div class="col-6">
+                <button class="btn btn-danger" id="clearFilterButton" style="float: right; display: none;" onclick="clearFilters()">Poništi filtere</button>
+                <button class="btn btn-success" id="applyFilterButton" style="float: right;" onclick="applyFilters()">Primjeni filtere</button>
+            </div>
+           
     <!-- EVENTS -->
     <div id="events" class="container-fluid py-5">
         <h1 class="text-center">Eventovi</h1>
